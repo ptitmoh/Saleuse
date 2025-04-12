@@ -72,53 +72,34 @@ uint8_t val_pour_test = 0;
 bool augmente = true; // true = augmente, false = diminue
 
 void loop() {
+  static unsigned long previousMillis = 0; // Stocke le temps précédent
+  const unsigned long interval = 100;     // Intervalle en millisecondes
 
-  if (augmente) {
-    val_pour_test++;
-    if (val_pour_test >= 15) {
-      augmente = false;
+  unsigned long currentMillis = millis(); // Temps actuel
+
+  if (currentMillis - previousMillis >= interval) {
+    previousMillis = currentMillis; // Met à jour le temps précédent
+
+    // Gestion de l'évolution de la vitesse
+    if (augmente) {
+      val_pour_test++;
+      if (val_pour_test >= 15) {
+        augmente = false;
+      }
+    } else {
+      val_pour_test--;
+      if (val_pour_test <= 0) {
+        augmente = true;
+      }
     }
-  } else {
-    val_pour_test--;
-    if (val_pour_test <= 0) {
-      augmente = true;
-    }
+
+    // Mise à jour des moteurs
+    setMoteur1(1);
+    setMoteur2(val_pour_test);
+    setMoteur3(val_pour_test);
+    setMoteur4(val_pour_test);
+    setMoteur5(val_pour_test);
   }
-
-  setMoteur1(1);
-  setMoteur2(val_pour_test);
-  setMoteur3(val_pour_test);
-  setMoteur4(val_pour_test);
-  setMoteur5(val_pour_test);
-  delay(100);
-
-
-
-  // ---- [DEBUT] Exemple d'appel pour tous les moteurs avec la même valeur :
-  //   setMoteur1(val);
-  //   setMoteur2(val);
-  //   setMoteur3(val);
-  //   setMoteur4(val);
-  //   setMoteur5(val);
-  // }
-  // ---- [FIN] Exemple d'appel pour tous les moteurs avec la même valeur :
-
-
-  // ---- [DEBUT] version FINALE avec le bus 4 bits
-  // On lit les 4 bits du bus et on les envoie à tous les moteurs
-  // On ne fait pas de PWM sur le moteur ce n'est pas un moteur pour le déplacement du robot contrairement aux autres, mais on peut le faire si besoin
-  // uint8_t val = getBus4BitsValue();
-  // if (val != val_precedente) {
-  //   Serial.print("val = ");
-  //   Serial.println(val);
-  //   val_precedente = val;
-  //   setMoteur1(1);
-  //   setMoteur2(val);
-  //   setMoteur3(val);
-  //   setMoteur4(val);
-  //   setMoteur5(val);
-  // } 
-  // ---- [FIN] version FINALE avec le bus 4 bits
 }
 
 uint8_t getBus4BitsValue() {
