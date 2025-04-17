@@ -73,7 +73,7 @@ bool augmente = true; // true = augmente, false = diminue
 
 void loop() {
   static unsigned long previousMillis = 0; // Stocke le temps précédent
-  const unsigned long interval = 100;     // Intervalle en millisecondes
+  const unsigned long interval = 200;     // Intervalle en millisecondes
 
   unsigned long currentMillis = millis(); // Temps actuel
 
