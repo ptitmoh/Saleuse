@@ -69,16 +69,6 @@ void setup() {
 uint8_t val_precedente = 0;
 
 void loop() {
-  // if (Serial.available()) {
-  //   uint8_t val = Serial.read() & 0x0F; // Lire sur 4 bits
-
-  //   // Exemple d'appel pour tous les moteurs avec la même valeur :
-  //   setMoteur1(val);
-  //   setMoteur2(val);
-  //   setMoteur3(val);
-  //   setMoteur4(val);
-  //   setMoteur5(val);
-  // }
   uint8_t val = getBus4BitsValue();
   if (val != val_precedente) {
     Serial.print("val = ");
